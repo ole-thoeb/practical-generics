@@ -62,8 +62,6 @@ If the `Option` is `None` then `map` does nothing.
 </details>
 
 <details>
-
-<details>
 <summary>Hint 2</summary>
 
 If the `Option` is `Some` then `map` calls the `mapper` function with the value of the option and returns the resulting value wrapped in a new `Some`.
