@@ -18,7 +18,7 @@ Define two different classes, one for each variant.
 <details>
 <summary>Hint 2</summary>
 
-Define the `Option` type as the union of both the variants.
+Define the `Option` type as the union of both variants.
 </details>
 
 <details>
@@ -53,7 +53,36 @@ Take a look at the `never` type in typescript.
 
 ## `map`
 
-Write a function map that takes a function f and uses it to transform the wrapped value of the.
+Write an instance function `map` that takes a function `mapper` and uses it to transform the wrapped value of the `Option`.
+
+<details>
+<summary>Hint 1</summary>
+
+If the `Option` is `None` then `map` does nothing.
+</details>
+
+<details>
+
+<details>
+<summary>Hint 2</summary>
+
+If the `Option` is `Some` then `map` calls the `mapper` function with the value of the option and returns the resulting value wrapped in a new `Some`.
+</details>
+
+<details>
+<summary>Hint 3</summary>
+
+`map` must introduce a new type. The `mapper` function takes a value of the wrapped type of the `Option` and returns the new type.
+</details>
+
+
+<details>
+<summary>Hint 4</summary>
+
+```ts
+map<U>(mapper: (value:T) => U): Option<T>
+```
+</details>
 
 ## `flatMap`
 
