@@ -84,7 +84,9 @@ map<U>(mapper: (value:T) => U): Option<T>
 
 ## `flatMap`
 
-Write a function flatMap that takes a function f and uses it to transform the wrapped value. The function f should return an maybe but the returns falue of flatMap shall be flat i.e. not be a nested Maybe
+Write an instance function `flatMap` that takes a function `mapper` and uses it to transform the wrapped value. The `mapper` function should return an `Option` but the returned value of `flatMap` shall be flat i.e. not be a nested `Option`.
 
-Write a function flatten that takes a Maybe containing a maybe and unwraps it i.e. returns the nested maybe
-Challenge: implement it only using flatMap
+## `Option.flatten`
+
+Write a free function `flatten` that takes an `Option` containing an `Option` and flatens it i.e. returns the nested Option.
+**Challenge:** implement it only using flatMap
