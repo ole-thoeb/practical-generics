@@ -43,7 +43,7 @@ none<T>(): Option<T>
 </details>
 
 
-<u>**Challenge:**</u> implement the `None` variant as a singleton without casting i.e. always the same instance is returned, regardless of the type the wrapped value has.
+<ins>**Challenge:**</ins> implement the `None` variant as a singleton without casting i.e. always the same instance is returned, regardless of the type the wrapped value has.
 
 <details>
 <summary>Challenge hint 1</summary>
@@ -51,9 +51,9 @@ none<T>(): Option<T>
 Take a look at the `never` type in typescript.
 </details>
 
-## `map`
+## `option.map`
 
-Write an instance function `map` that takes a function `mapper` and uses it to transform the wrapped value of the `Option`.
+Write a method `map` that takes a function `mapper` and uses it to transform the wrapped value of the `Option`.
 
 <details>
 <summary>Hint 1</summary>
@@ -73,20 +73,88 @@ If the `Option` is `Some` then `map` calls the `mapper` function with the value 
 `map` must introduce a new type. The `mapper` function takes a value of the wrapped type of the `Option` and returns the new type.
 </details>
 
+<details>
+<summary>Hint 4</summary>
+
+```ts
+map<U>(mapper: (value:T) => U): Option<U>
+```
+</details>
+
+## `option.flatMap`
+
+Write a method `flatMap` that takes a function `mapper` and uses it to transform the wrapped value. The `mapper` function should return an `Option` instance but the returned value of `flatMap` shall be flat i.e. not be a nested `Option`.
+
+
+<details>
+<summary>Hint 1</summary>
+
+If the `Option` is `None` then `flatMap` does nothing.
+</details>
+
+<details>
+<summary>Hint 2</summary>
+
+If the `Option` is `Some` then `flatMap` calls the `mapper` function with the value of the option and returns the result.
+</details>
+
+<details>
+<summary>Hint 3</summary>
+
+`flatMap` must introduce a new type. The `mapper` function takes a value of the wrapped type of the `Option` and returns an `Option` of the new type.
+</details>
 
 <details>
 <summary>Hint 4</summary>
 
 ```ts
-map<U>(mapper: (value:T) => U): Option<T>
+flatMap<U>(mapper: (value:T) => Option<U>): Option<U>
 ```
 </details>
 
-## `flatMap`
-
-Write an instance function `flatMap` that takes a function `mapper` and uses it to transform the wrapped value. The `mapper` function should return an `Option` but the returned value of `flatMap` shall be flat i.e. not be a nested `Option`.
-
 ## `Option.flatten`
 
-Write a free function `flatten` that takes an `Option` containing an `Option` and flatens it i.e. returns the nested Option.
-**Challenge:** implement it only using flatMap
+Write a free function `flatten` that takes an `Option` containing an `Option` and flattens it i.e. returns the nested `Option`.
+
+
+<details>
+<summary>Hint 1</summary>
+
+If the `Option` is `None` then `Option.flatten` does nothing.
+</details>
+
+<details>
+<summary>Hint 2</summary>
+
+If the `Option` is `Some` then `Option.flatten` simply returns the wrapped value.
+</details>
+
+<details>
+<summary>Hint 3</summary>
+
+`Option.flatten` must introduce a new type that describes the value wrapped by two `Options`.
+</details>
+
+<details>
+<summary>Hint 4</summary>
+
+```ts
+flatten<T>(option: Option<Option<T>>): Option<T>
+```
+</details>
+
+<ins>**Challenge 1:**</ins> implement it only using `flatMap`.
+
+<details>
+<summary>Challenge hint 1</summary>
+
+`flatMap` already has a "flattening" behavior. Let the `flatMap` do nothing.
+</details>
+
+<ins>**Challenge 2:**</ins> also implement a method named `flatten` that does the same. `option.flatten` should only be callable if `option` is known to container another `Option`.
+
+<details>
+<summary>Challenge hint 1</summary>
+
+Take a look at [this parameters](https://www.typescriptlang.org/docs/handbook/2/classes.html#this-parameters). They allow you to specify in which context a method is allowed to be called.
+</details>
