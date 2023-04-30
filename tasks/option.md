@@ -4,6 +4,8 @@ The goal is to implement the type `Option<T>`. It represents a a value of type `
 - `Some` for the case the value exist. Containing "some" value of type `T`.
 - `None` for the case the value doesn't exist.
 
+Your solution should go [here](/src/option.ts). There are also [unit tests](/test/option.spec.ts) and [sample solutions](/src/option.solution.ts).
+
 ## `Option.some` and `Option.none`
 Create two free functions
  - `Option.some` taking any value and returning an `Option` instance holding that value. The returned value should have a `value` field containing the passed value and a `hasValue` field set to `true`.
@@ -146,7 +148,7 @@ flatten<T>(option: Option<Option<T>>): Option<T>
 <ins>**Challenge 1:**</ins> implement it only using `flatMap`.
 
 <details>
-<summary>Challenge hint 1</summary>
+<summary>Challenge hint 1.1</summary>
 
 `flatMap` already has a "flattening" behavior. Let the `flatMap` do nothing.
 </details>
@@ -154,7 +156,7 @@ flatten<T>(option: Option<Option<T>>): Option<T>
 <ins>**Challenge 2:**</ins> also implement a method named `flatten` that does the same. `option.flatten` should only be callable if `option` is known to container another `Option`.
 
 <details>
-<summary>Challenge hint 1</summary>
+<summary>Challenge hint 2.1</summary>
 
 Take a look at [this parameters](https://www.typescriptlang.org/docs/handbook/2/classes.html#this-parameters). They allow you to specify in which context a method is allowed to be called.
 </details>
