@@ -2,23 +2,34 @@ class Some<T> {
     readonly hasValue = true
     constructor(readonly value: T) {}
 
-    map<T2>(f: (t: T) => T2): Option<T2> {
+    map<U>(f: (t: T) => U): Option<U> {
         return Option.some(f(this.value))
     }
 
-    flatMap<T2>(f: (t: T) => Option<T2>): Option<T2> {
+    flatMap<U>(f: (t: T) => Option<U>): Option<U> {
         return f(this.value)
+    }
+
+    flatten<U>(this: Option<Option<U>>): Option<U> {
+        if (this.hasValue) {
+            return this.value
+        }
+        return Option.none()
     }
 }
 
 class None {
     readonly hasValue = false
 
-    map<T2>(): Option<T2> {
+    map<U>(): Option<U> {
         return this
     }
 
-    flatMap<T2>(): Option<T2> {
+    flatMap<U>(): Option<U> {
+        return this
+    }
+
+    flatten(): Option<never> {
         return this
     }
 }
@@ -31,5 +42,8 @@ export const Option = {
     },
     none(): Option<never> {
         return new None()
+    },
+    flatten<T>(option: Option<Option<T>>): Option<T> {
+        return option.flatMap(x => x)
     }
 }

@@ -29,7 +29,7 @@ describe("Option.none", () => {
     })
 })
 
-describe("Option.map", () => {
+describe("option.map", () => {
     it("transforms the value if the option is some", () => {
         expect(Option.some(3).map(n => n + 4)).toEqual(Option.some(7))
     })
@@ -45,7 +45,7 @@ describe("Option.map", () => {
     })
 })
 
-describe("Option.flatMap", () => {
+describe("option.flatMap", () => {
     it("transforms the value if the option is some", () => {
         expect(Option.some(3).flatMap(n => Option.some(n + 4))).toEqual(Option.some(7))
     })
@@ -58,5 +58,31 @@ describe("Option.flatMap", () => {
     it("Option.some is identity", () => {
         const option = Option.some("Hello, world!")
         expect(option.flatMap(Option.some)).toEqual(option)
+    })
+})
+
+describe("Option.flatten", () => {
+    it("does nothing with None", () => {
+        expect(Option.flatten(Option.none())).toEqual(Option.none())
+    })
+
+    it("unwraps nested Some", () => {
+        const someNone = Option.some(Option.none())
+        const someSome = Option.some(Option.some(4))
+        expect(Option.flatten(someNone)).toEqual(Option.none())
+        expect(Option.flatten(someSome)).toEqual(Option.some(4))
+    })
+})
+
+describe("option.flatten", () => {
+    it("does nothing with None", () => {
+        expect(Option.none().flatten()).toEqual(Option.none())
+    })
+
+    it("unwraps nested Some", () => {
+        const someNone = Option.some(Option.none())
+        const someSome = Option.some(Option.some(4))
+        expect(someNone.flatten()).toEqual(Option.none())
+        expect(someSome.flatten()).toEqual(Option.some(4))
     })
 })
