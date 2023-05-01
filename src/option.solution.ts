@@ -1,6 +1,6 @@
 class Some<T> {
     readonly hasValue = true
-    constructor(readonly value: T) {}
+    constructor(readonly value: T) { }
 
     map<U>(f: (t: T) => U): Option<U> {
         return Option.some(f(this.value))
@@ -42,6 +42,12 @@ export const Option = {
     },
     none(): Option<never> {
         return new None()
+    },
+    fromNullable<T>(nullishValue: T): Option<NonNullable<T>> {
+        if (nullishValue == null) {
+            return Option.none()
+        }
+        return Option.some(nullishValue)
     },
     flatten<T>(option: Option<Option<T>>): Option<T> {
         return option.flatMap(x => x)

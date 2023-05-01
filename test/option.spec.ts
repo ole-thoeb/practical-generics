@@ -9,7 +9,7 @@ describe("Option.some", () => {
 
     it("hasValue is true and has value field", () => {
         const b: Option<number> = Option.some(42)
-        
+
         expect(b.hasValue).toBe(true)
         if (b.hasValue) {
             expect(b.value).toBe(42)
@@ -42,6 +42,31 @@ describe("option.map", () => {
     it("does nothing if the option is none", () => {
         const option: Option<number> = Option.none()
         expect(option.map(n => n + 4)).toEqual(option)
+    })
+})
+
+describe("Option.fromNullable", () => {
+    it("turns null into None", () => {
+        expect(Option.fromNullable(null)).toEqual(Option.none())
+    })
+
+    it("turns undefined into None", () => {
+        expect(Option.fromNullable(undefined)).toEqual(Option.none())
+    })
+
+    it("wraps a non nullable value into a Some", () => {
+        expect(Option.fromNullable(0)).toEqual(Option.some(0))
+        expect(Option.fromNullable("")).toEqual(Option.some(""))
+        expect(Option.fromNullable(false)).toEqual(Option.some(false))
+        expect(Option.fromNullable({ a: "AAAA" })).toEqual(Option.some({ a: "AAAA" }))
+    })
+
+    it("removes null | undefined from the type", () => {
+        const v1 = undefined as string | undefined
+        const option1: Option<string> = Option.fromNullable(v1)
+
+        const v2 = 0 as number | null
+        const option2: Option<number> = Option.fromNullable(v2)
     })
 })
 

@@ -53,6 +53,24 @@ none<T>(): Option<T>
 Take a look at the `never` type in typescript.
 </details>
 
+## `Option.fromNullable`
+Write a free function that takes a value that might be `null` or `undefined`. It the value was `null | undefined` `None` is returned, otherwise the value is wrapped in a `Some`.
+The return type should reflect that the `Option` can't contain `null | undefined`.
+
+<details>
+<summary>Hint 1</summary>
+
+Typescript has a built in utility type `NonNullable`.
+</details>
+
+<details>
+<summary>Hint 2</summary>
+
+```ts
+fromNullable<T>(nullishValue: T): Option<NonNullable<T>>
+```
+</details>
+
 ## `option.map`
 
 Write a method `map` that takes a function `mapper` and uses it to transform the wrapped value of the `Option`.
