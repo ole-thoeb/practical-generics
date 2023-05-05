@@ -29,22 +29,6 @@ describe("Option.none", () => {
     })
 })
 
-describe("option.map", () => {
-    it("transforms the value if the option is some", () => {
-        expect(Option.some(3).map(n => n + 4)).toEqual(Option.some(7))
-    })
-
-    it("does nothing when passed the identity function", () => {
-        const option = Option.some("Hello, world!")
-        expect(option.map(x => x)).toEqual(option)
-    })
-
-    it("does nothing if the option is none", () => {
-        const option: Option<number> = Option.none()
-        expect(option.map(n => n + 4)).toEqual(option)
-    })
-})
-
 describe("Option.fromNullable", () => {
     it("turns null into None", () => {
         expect(Option.fromNullable(null)).toEqual(Option.none())
@@ -67,6 +51,34 @@ describe("Option.fromNullable", () => {
 
         const v2 = 0 as number | null
         const option2: Option<number> = Option.fromNullable(v2)
+    })
+})
+
+describe("option.unwrapOr", () => {
+    it("returns the wrapped value if option is Some", () => {
+        expect(Option.some(3).unwrapOr(4)).toEqual(3)
+        expect(Option.some(null).unwrapOr("Hello")).toEqual(null)
+    })
+
+    it("returns the given default if option is None", () => {
+        expect(Option.none().unwrapOr(null)).toEqual(null)
+        expect(Option.none().unwrapOr("Hello")).toEqual("Hello")
+    })
+})
+
+describe("option.map", () => {
+    it("transforms the value if the option is some", () => {
+        expect(Option.some(3).map(n => n + 4)).toEqual(Option.some(7))
+    })
+
+    it("does nothing when passed the identity function", () => {
+        const option = Option.some("Hello, world!")
+        expect(option.map(x => x)).toEqual(option)
+    })
+
+    it("does nothing if the option is none", () => {
+        const option: Option<number> = Option.none()
+        expect(option.map(n => n + 4)).toEqual(option)
     })
 })
 

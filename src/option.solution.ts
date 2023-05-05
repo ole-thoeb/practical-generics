@@ -2,6 +2,10 @@ class Some<T> {
     readonly hasValue = true
     constructor(readonly value: T) { }
 
+    unwrapOr(): T {
+        return this.value
+    }
+
     map<U>(f: (t: T) => U): Option<U> {
         return Option.some(f(this.value))
     }
@@ -20,6 +24,10 @@ class Some<T> {
 
 class None {
     readonly hasValue = false
+
+    unwrapOr<U>(defaultValue: U): U {
+        return defaultValue
+    }
 
     map<U>(): Option<U> {
         return this

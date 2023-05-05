@@ -71,6 +71,30 @@ fromNullable<T>(nullishValue: T): Option<NonNullable<T>>
 ```
 </details>
 
+## `option.unwrapOr`
+Write a method `unwrapOr` that takes a default value that is returns if `option` is `None`. If `option` is `Some` the wrapped is value simply returned.
+`unwrapOr should allow for widening the type. Meaning the type of the default value can differ from the wrapped type.
+
+<details>
+<summary>Hint 1</summary>
+
+`unwrapOr` must introduce e new type for the Default value.
+</details>
+
+<details>
+<summary>Hint 2</summary>
+
+The return type is the union of the wrapped type and the type of the default value.
+</details>
+
+<details>
+<summary>Hint 3</summary>
+
+```ts
+unwrapOr<U>(defaultValue: U): T | U
+```
+</details>
+
 ## `option.map`
 
 Write a method `map` that takes a function `mapper` and uses it to transform the wrapped value of the `Option`.
