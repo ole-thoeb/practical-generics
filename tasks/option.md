@@ -26,7 +26,7 @@ Define the `Option` type as the union of both variants.
 <details>
 <summary>Hint 3</summary>
 
-Build the variants in such a way that `Maybe` becomes a [discriminated union](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions). 
+Build the variants in such a way that `Option` becomes a [discriminated union](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions). 
 </details>
 
 <details>
