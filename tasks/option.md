@@ -60,7 +60,7 @@ The return type should reflect that the `Option` can't contain `null | undefined
 <details>
 <summary>Hint 1</summary>
 
-Typescript has a built in utility type `NonNullable`.
+Typescript has a built in utility type [`NonNullable`](https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype).
 </details>
 
 <details>
