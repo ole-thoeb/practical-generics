@@ -54,7 +54,7 @@ Take a look at the `never` type in typescript.
 </details>
 
 ## `Option.fromNullable`
-Write a free function that takes a value that might be `null` or `undefined`. It the value was `null | undefined` `None` is returned, otherwise the value is wrapped in a `Some`.
+Write a free function that takes a value that might be `null` or `undefined`. If the value was `null | undefined` than `None` is returned, otherwise the value is wrapped in a `Some`.
 The return type should reflect that the `Option` can't contain `null | undefined`.
 
 <details>
@@ -72,8 +72,8 @@ fromNullable<T>(nullishValue: T): Option<NonNullable<T>>
 </details>
 
 ## `option.unwrapOr`
-Write a method `unwrapOr` that takes a default value that is returns if `option` is `None`. If `option` is `Some` the wrapped is value simply returned.
-`unwrapOr should allow for widening the type. Meaning the type of the default value can differ from the wrapped type.
+Write a method `unwrapOr` that takes a default value that is returned if `option` is `None`. If `option` is `Some` the wrapped is value simply returned.
+`unwrapOr` should allow for widening the type. Meaning the type of the default value can differ from the wrapped type.
 
 <details>
 <summary>Hint 1</summary>
