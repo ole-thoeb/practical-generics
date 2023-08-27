@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { Option } from "../src/option"
+import { Option } from "../src/option.solution"
 
 describe("Option.some", () => {
     it("can be called with any value", () => {

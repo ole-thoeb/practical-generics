@@ -187,7 +187,7 @@ flatten<T>(option: Option<Option<T>>): Option<T>
 ```
 </details>
 
-<ins>**Challenge 1:**</ins> implement it only using `flatMap`.
+<ins>**Challenge 1:**</ins> Implement `flatten` only using `flatMap`.
 
 <details>
 <summary>Challenge hint 1.1</summary>
@@ -195,7 +195,7 @@ flatten<T>(option: Option<Option<T>>): Option<T>
 `flatMap` already has a "flattening" behavior. Let the `flatMap` do nothing.
 </details>
 
-<ins>**Challenge 2:**</ins> also implement a method named `flatten` that does the same. `option.flatten` should only be callable if `option` is known to container another `Option`.
+<ins>**Challenge 2:**</ins> Also implement a method named `flatten` that does the same. `option.flatten` should only be callable if `option` is known to contain another `Option`.
 
 <details>
 <summary>Challenge hint 2.1</summary>
