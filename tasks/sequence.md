@@ -104,7 +104,7 @@ All sequences are similar and only differ in the returned `Iterator`. Hence, it 
 <details>
 <summary>General implementation hint 2</summary>
 
-Reusing the other methods can be achieved by implementing them in an abstract class, where `Symbol.iterator` is abstract, and inheritance.
+Reusing the other methods can be achieved by implementing them in an abstract class, where only `Symbol.iterator` is abstract. Type inference in loops can get a bit wonky, it might be easier to introduce a new abstract method that provides the actual iterator.
 
 Another possibility is to define a factory function. It takes an implementation of a `Symbol.iterator` function and returns a `Sequence` defining all the other methods.
 </details>
@@ -130,7 +130,7 @@ first(): T | undefined
 </details>
 
 ## `sequence.map`
-Define a method `sequence.map` taking a function `mapper`. The `mapper` function transforms the `sequence` elementwiese.
+Define a method `sequence.map` taking a function `mapper`. The `mapper` function transforms the `sequence` elementwise.
 It takes as arguments both the element and the index of the element.  
 The method returns a new sequence containing the transformed elements.
 Remember that sequences are lazy. That is, no computation (e.g. calls to the `mapper`) should occur until the sequence is consumed.
