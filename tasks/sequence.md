@@ -93,7 +93,7 @@ of<T>(...elements: readonly T[]): Sequence<T>
 </details>
 
 ## `sequence.first`
-Create a method `sequence.first` that either returns the first element of the sequence or `undefined` if the sequence is empty.
+Create the method `sequence.first` that either returns the first element of the sequence or `undefined` if the sequence is empty.
 
 <details>
 <summary>General implementation hint 1</summary>
@@ -130,7 +130,7 @@ first(): T | undefined
 </details>
 
 ## `sequence.map`
-Define a method `sequence.map` taking a function `mapper`. The `mapper` function transforms the `sequence` elementwiese.
+Define the method `sequence.map` taking a function `mapper`. The `mapper` function transforms the `sequence` elementwiese.
 It takes as arguments both the element and the index of the element.  
 The method returns a new sequence containing the transformed elements.
 Remember that sequences are lazy. That is, no computation (e.g. calls to the `mapper`) should occur until the sequence is consumed.
@@ -183,7 +183,7 @@ map<U>(mapper: (element:T, index: number) => U): Sequence<U>
 </details>
 
 ## `sequence.filter`
-Implement a method `sequence.filter` that takes a `predicate` and returns a new `Sequence` without only elements matching the `predicate`.  
+Implement the method `sequence.filter` that takes a `predicate` and returns a new `Sequence` without only elements matching the `predicate`.  
 Similar to the `mapper` from `sequence.map`, the `predicate` function gets both an element and it's index, but it returns `true` or `false` signaling if the element satisfies the condition.  
 Again, remember that sequences are lazy, e.g. no computation calls to `predicate` should occur until the sequence is consumed.
 
@@ -243,3 +243,95 @@ The overload must introduce a new type that the type predicates narrows to. The 
 filter<S extends T>(predicate: (element: T, index: number) => element is S): Sequence<S>;
 ```
 </details>
+
+## Collectors
+Until now we introduced functions that 
+ - created a new sequence and
+ - that transformed one sequence into another.
+The missing third kind of functions materialize / collect the elements in the sequence back into a container (`Array`/`Map`/`Set`).
+One could argue that we already introduced a function of this kind - [`sequence.first`](#sequencefirst) - only collecting the first element and disregarding the rest. 
+
+### `sequence.toArray`
+Implement the method `sequence.toArray` that consumes the `Sequence` and returns an `Array` that contains all the elements.
+
+<details>
+<summary>Hint 1</summary>
+
+[`Array.from`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from) creates a new `Array` from an `Iterator`.
+</details>
+
+<details>
+<summary>Signature hint 1</summary>
+
+```ts
+toArray(): T[]
+```
+</details>
+
+### `sequence.toSet`
+Implement the method `sequence.toSet` that consumes the `Sequence` and returns an `Set` that contains all the elements (excluding duplicates).
+
+<details>
+<summary>Hint 1</summary>
+
+The [`Set constructor`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/Set) can create an `Set` from an `Iterator`.
+</details>
+
+<details>
+<summary>Signature hint 1</summary>
+
+```ts
+toSet(): Set<T>
+```
+</details>
+
+### `sequence.toMap`
+Implement the method `sequence.toMap` that consumes the `Sequence` only containing tuples and returns an `Map` that contains all the elements.  
+A [tuple](https://www.typescriptlang.org/docs/handbook/2/objects.html#tuple-types) is an potentially heterogenes, readonly `Array` with exactly two elements.
+The first entry should become the key and the second value should become the value of the map entry.
+
+<details>
+<summary>Hint 1</summary>
+
+The [`Map constructor`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/Map) can create an `Map` from an `Iterator` of pairs.
+</details>
+
+<details>
+<summary>Signature hint 1</summary>
+
+Use a [this parameters](https://www.typescriptlang.org/docs/handbook/2/classes.html#this-parameters) to constrain in which context the method is callable.
+
+</details>
+
+<details>
+<summary>Signature hint 2</summary>
+
+The type of the Sequence (`this`) must be `Sequence<readonly [K, V]>` where `K` and `V` are new types.
+
+</details>
+
+<details>
+<summary>Signature hint 3</summary>
+
+```ts
+toMap<K, V>(this: Sequence<readonly [K, V]>): Map<K, V>
+```
+</details>
+
+## Utility type `SequenceElement<S>`
+Define the utility type `SequenceElement<S>` that evaluates to the element type if `S` is a `Sequence` and `never` otherwise.  
+For example 
+```ts
+type A = SequenceElement<Sequence<string>> // string
+type B = SequenceElement<string> // never
+type C = SequenceElement<Sequence<Sequence<number>>> // Sequence<number>
+```
+
+<details>
+<summary>Hint 1</summary>
+
+Take a look at conditional types, especially the [`infer`](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#inferring-within-conditional-types) keyword,
+</details>
+
+## `sequence.zip`
+TODO
