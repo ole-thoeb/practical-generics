@@ -64,15 +64,8 @@ abstract class AbstractSequence<T> implements Sequence<T> {
         return undefined;
     }
 
-    [Symbol.iterator](): Iterator<T> {
-        return this.iterator()
-    }
+    abstract [Symbol.iterator](): Iterator<T>
 
-    protected abstract iterator(): Iterator<T>
-}
-
-function createIteratorFn<R, T>(receiver: R, fn: (this: R) => Generator<T>): () => Generator<T> {
-    return fn.bind(receiver)
 }
 
 class IterableSequence<T> extends AbstractSequence<T> {
@@ -81,7 +74,7 @@ class IterableSequence<T> extends AbstractSequence<T> {
         super();
     }
 
-    iterator(): Iterator<T> {
+    [Symbol.iterator](): Iterator<T> {
         return this.iterable[Symbol.iterator]();
     }
 }
@@ -93,11 +86,11 @@ class ArrayLikeSequence<T> extends AbstractSequence<T> {
         this.arrayLike = arrayLike;
     }
 
-    iterator = createIteratorFn(this, function* () {
+    *[Symbol.iterator](): Iterator<T> {
         for (let i = 0; i < this.arrayLike.length; i++) {
             yield this.arrayLike[i];
         }
-    })
+    }
 }
 
 class MappingSequence<T, R> extends AbstractSequence<R> {
@@ -106,12 +99,12 @@ class MappingSequence<T, R> extends AbstractSequence<R> {
         super();
     }
 
-    iterator = createIteratorFn(this, function* () {
+    *[Symbol.iterator](): Iterator<R> {
         let index = 0;
         for (const element of this.seq) {
             yield this.transform(element, index++);
         }
-    })
+    }
 }
 
 class FilteringSequence<T, S extends T> extends AbstractSequence<S> {
@@ -120,14 +113,14 @@ class FilteringSequence<T, S extends T> extends AbstractSequence<S> {
         super();
     }
 
-    iterator = createIteratorFn(this, function* () {
+    *[Symbol.iterator](): Iterator<S> {
         let index = 0;
         for (const element of this.seq) {
             if (this.predicate(element, index++)) {
                 yield element;
             }
         }
-    })
+    }
 }
 
 type SequenceElement<S> = S extends Sequence<infer E> ? E : never;
@@ -139,7 +132,7 @@ class ZippingSequence<T, Z extends Sequence<unknown>[]> extends AbstractSequence
         super();
     }
 
-    iterator = createIteratorFn(this, function* () {
+    *[Symbol.iterator]() {
         const iters = [this.firstSeq[Symbol.iterator](), ...this.remainingSeqs.map((seq) => seq[Symbol.iterator]())];
 
         while (true) {
@@ -150,5 +143,5 @@ class ZippingSequence<T, Z extends Sequence<unknown>[]> extends AbstractSequence
                 return;
             }
         }
-    })
+    }
 }

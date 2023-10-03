@@ -104,7 +104,7 @@ All sequences are similar and only differ in the returned `Iterator`. Hence, it 
 <details>
 <summary>General implementation hint 2</summary>
 
-Reusing the other methods can be achieved by implementing them in an abstract class, where only `Symbol.iterator` is abstract. Type inference in loops can get a bit wonky, it might be easier to introduce a new abstract method that provides the actual iterator.
+Reusing the other methods can be achieved by implementing them in an abstract class, where only `Symbol.iterator` is abstract.
 
 Another possibility is to define a factory function. It takes an implementation of a `Symbol.iterator` function and returns a `Sequence` defining all the other methods.
 </details>
@@ -143,8 +143,20 @@ In essence, this is the sequence equivalent of [`Array.prototype.map()`](https:/
 
 The [iterator protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol)
 is relatively involved.
-It is easier to to put your logic in a [generator function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*) and invoke it than implement your own custom iterator.
-Just be aware that by default `this` inside `function*` does _not_ refer to the `this` of the containing class.
+
+It is easier to make `[Symbol.iterator]` a [generator function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*), specifically see [this example](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*#generator_as_a_computed_property). Either
+```ts
+*[Symbol.iterator](): Iterator<T> {
+    // your impl
+}
+```
+or 
+```ts
+createSequence(function*() { 
+    // your impl
+})
+```
+depending on if you are using classes or not.
 </details>
 
 
