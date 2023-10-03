@@ -72,23 +72,6 @@ describe("Sequence.of", () => {
     })
 })
 
-describe("sequence.toArray", () => {
-    it("collects the sequence elements into an array", () => {
-        expect(Sequence.from(new Map([["a", 1], ["b", 2]])).toArray()).toEqual([["a", 1], ["b", 2]])
-        expect(Sequence.of(1, 2, 3, 4, 5).toArray()).toEqual([1, 2, 3, 4, 5])
-    })
-
-    it("Sequence.from -> sequence.toArray with array is identity", () => {
-        const expectId = <T>(arr: T[]) => {
-            expect(Sequence.from(arr).toArray()).toEqual(arr)
-        }
-        expectId([1, 2, 3, 4])
-        expectId(["a", "b", "c"])
-        expectId([])
-        expectId([["a", 1], ["b", 2]])
-    })
-})
-
 describe("sequence.first", () => {
     it("returns undefined if the sequence is empty", () => {
         expect(Sequence.of().first()).toBeUndefined()
@@ -186,5 +169,53 @@ describe("sequence.filter", () => {
         expectIterableContains(Sequence.of(1, 2, 3, 4, 5, 6).filter(predicate).map(mapper), 4, 16, 36)
         expect(predicate).toBeCalledTimes(6)
         expect(mapper).toBeCalledTimes(3)
+    })
+})
+
+describe("sequence.toArray", () => {
+    it("collects the sequence elements into an array", () => {
+        expect(Sequence.from(new Map([["a", 1], ["b", 2]])).toArray()).toEqual([["a", 1], ["b", 2]])
+        expect(Sequence.of(1, 2, 3, 4, 5).toArray()).toEqual([1, 2, 3, 4, 5])
+    })
+
+    it("Sequence.from -> sequence.toArray with array is identity", () => {
+        const expectId = <T>(arr: T[]) => {
+            expect(Sequence.from(arr).toArray()).toEqual(arr)
+        }
+        expectId([1, 2, 3, 4])
+        expectId(["a", "b", "c"])
+        expectId([])
+        expectId([["a", 1], ["b", 2]])
+    })
+})
+
+describe("sequence.toSet", () => {
+    it("collects the sequence elements into a set", () => {
+        expect(Sequence.from("haha").toSet()).toEqual(new Set(["h", "a"]))
+    })
+
+    it("Sequence.from -> sequence.toSet with set is identity", () => {
+        const expectId = <T>(set: Set<T>) => {
+            expect(Sequence.from(set).toSet()).toEqual(set)
+        }
+        expectId(new Set([1, 2, 3, 4]))
+        expectId(new Set(["a", "b", "c"]))
+        expectId(new Set())
+        expectId(new Set([["a", 1], ["b", 2]]))
+    })
+})
+
+describe("sequence.toMap", () => {
+    it("collects the sequence elements into a map", () => {
+        expect(Sequence.from(new Map([["a", 1], ["b", 2]])).toArray()).toEqual([["a", 1], ["b", 2]])
+        expect(Sequence.of("a", "b", "c", "d").map((c, i) => [c, i + 1] as const).toMap()).toEqual(new Map([["a", 1], ["b", 2], ["c", 3], ["d", 4]]))
+    })
+
+    it("Sequence.from -> sequence.toMap with map is identity", () => {
+        const expectId = <K, V>(map: Map<K, V>) => {
+            expect(Sequence.from(map).toMap()).toEqual(map)
+        }
+        expectId(new Map())
+        expectId(new Map([["a", 1], ["b", 2]]))
     })
 })
