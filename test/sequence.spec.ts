@@ -219,3 +219,29 @@ describe("sequence.toMap", () => {
         expectId(new Map([["a", 1], ["b", 2]]))
     })
 })
+
+describe("sequence.zip", () => {
+    it("combines two sequences of equal length", () => {
+        const seq1 = Sequence.of("a", "b", "c", "d")
+        const seq2 = Sequence.of(1, 2, 3, 4)
+        expectIterableContains(seq1.zip(seq2), ["a", 1], ["b", 2], ["c", 3], ["d", 4])
+    })
+
+    it("empty if one sequence is empty", () => {
+        const seq = Sequence.of("a", "b", "c", "d")
+        expectEmptyIterable(seq.zip(Sequence.of()))
+        expectEmptyIterable(Sequence.of().zip(seq)) 
+    })
+
+    it("unneeded elements are not evaluated", () => {
+        let called1 = 0
+        const seq1 = Sequence.of("a", "b", "c", "d").map(e => (called1++, e)).zip(Sequence.of(1, 2))
+        expectIterableContains(seq1, ["a", 1], ["b", 2])
+        expect(called1).toBeLessThanOrEqual(3)
+
+        let called2 = 0
+        const seq2 = Sequence.of(1).zip(Sequence.of("a", "b", "c", "d").map(e => (called2++, e)))
+        expectIterableContains(seq2, [1, "a"])
+        expect(called2).toBeLessThanOrEqual(2)
+    })
+})

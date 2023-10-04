@@ -260,6 +260,7 @@ filter<S extends T>(predicate: (element: T, index: number) => element is S): Seq
 Until now we introduced functions that 
  - created a new sequence and
  - that transformed one sequence into another.
+
 The missing third kind of functions materialize / collect the elements in the sequence back into a container (`Array`/`Map`/`Set`).
 One could argue that we already introduced a function of this kind - [`sequence.first`](#sequencefirst) - only collecting the first element and disregarding the rest. 
 
