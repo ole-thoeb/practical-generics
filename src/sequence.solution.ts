@@ -20,8 +20,8 @@ export const Sequence = {
     of<T>(...elements: readonly T[]): Sequence<T> {
         return Sequence.from(elements);
     },
-    toMap<K, V>(s: Sequence<readonly [K, V]>): Map<K, V> {
-        return s.toMap()
+    empty<T>(): Sequence<T> {
+        return EMPTY_SEQUENCE
     }
 } as const;
 
@@ -145,3 +145,5 @@ class ZippingSequence<T, Z extends Sequence<unknown>[]> extends AbstractSequence
         }
     }
 }
+
+const EMPTY_SEQUENCE: Sequence<never> = Sequence.from([])

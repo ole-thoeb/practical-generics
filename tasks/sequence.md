@@ -92,6 +92,31 @@ of<T>(...elements: readonly T[]): Sequence<T>
 ```
 </details>
 
+## `Sequence.empty`
+Create a factory function that simply creates an empty sequence, that is, has no elements.
+
+<details>
+<summary>Hint 1</summary>
+
+Delegate to `Sequence.of`.
+</details>
+
+<details>
+<summary>Signature hint</summary>
+
+```ts
+empty<T>(): Sequence<T>
+```
+</details>
+
+<ins>**Challenge:**</ins> Implement `Sequence.empty` in such a way that the returned empty sequence is a constant, i.e. `Sequence.empty() === Sequence.empty()` is always `true`.
+
+<details>
+<summary>Challenge hint 1</summary>
+
+Take a look at the `never` type declare a `Sequence` that can be assigned to `Sequence<T>`, for all `T`.
+</details>
+
 ## `sequence.first`
 Create the method `sequence.first` that either returns the first element of the sequence or `undefined` if the sequence is empty.
 
@@ -203,6 +228,7 @@ This is the sequence equivalent of [`Array.prototype.filter()`](https://develope
 
 <details>
 <summary>Hint 1</summary>
+
 Loop over the old sequence and `yield` the element only if it satisfies the `predicate`, otherwise continue with the next.
 </details>
 
@@ -347,4 +373,38 @@ Take a look at conditional types, especially the [`infer`](https://www.typescrip
 </details>
 
 ## `sequence.zip`
-TODO
+Implement the method `sequence.zip`. It takes another `Sequence` of any element type and returns a new sequence where both elements at an index are combined in a tuple.
+For example, zipping the sequences containing the elements `1, 2, 3` and `"a", "b", "c"` yields a sequence containing `[1, "a"], [2, "b"], [3, "c"]`.  
+If one sequence has less elements than the other, then the resulting sequence only contains as many elements as the shorter of the two. Therefore, zipping with an empty sequence should always results in an empty sequence.
+
+<details>
+<summary>Hint 1</summary>
+
+Iterate over both sequences at the same time. If both still have an element, then `yield` them, otherwise terminate.
+</details>
+
+<details>
+<summary>Hint 2</summary>
+
+Use `Iterator.next` to poll the next element from an iterator.
+</details>
+
+<details>
+<summary>Hint 3</summary>
+
+Get the iterators for both sequences. Poll them both simultaneously in a loop. If both have a next element, then `yield` a tuple contain both. Otherwise, terminate the iteration by `return`ing.
+</details>
+
+<details>
+<summary>Signature hint 1</summary>
+
+`zip` must introduce a new type to capture the element type of the second `Sequence`. The returned `Sequence` has tuples as elements, where the first and second element of the tuple have the element type of the first and second sequence respectively.
+</details>
+
+<details>
+<summary>Signature hint 2</summary>
+
+```ts
+zip<T2>(sequence: Sequence<T2>): Sequence<[T, T2]>
+```
+</details>

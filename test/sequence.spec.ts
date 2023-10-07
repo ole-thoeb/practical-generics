@@ -72,6 +72,20 @@ describe("Sequence.of", () => {
     })
 })
 
+describe("Sequence.empty", () => {
+    it("is empty", () => {
+        expectEmptyIterable(Sequence.empty())
+    })
+
+    it("returns always the same object", () => {
+        const empty1 = Sequence.empty()
+        const empty2 = Sequence.empty()
+        const empty3 = Sequence.empty()
+        expect(empty1).toBe(empty2)
+        expect(empty2).toBe(empty3)
+    })
+})
+
 describe("sequence.first", () => {
     it("returns undefined if the sequence is empty", () => {
         expect(Sequence.of().first()).toBeUndefined()
