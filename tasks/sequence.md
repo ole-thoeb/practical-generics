@@ -14,7 +14,7 @@ Sequence.of(1, 2, 3)
     .filter((_, i) => i % 2 === 0)
 ```
 
-Here `array.map` allocates an intermediate array of size 3 while `sequence.map` performs no allocation for intermediate storage. In fact the sequence code doesn't produce a result at all, since the result is never used.
+Here `array.map` allocates an intermediate array of size 3 while `sequence.map` performs no allocation for intermediate storage. In fact, the sequence code doesn't produce a result at all, since the result is never used.
 To get the sequence to perform the computation, we need to use the elements of the resulting sequence, e.g. by looping over the sequence.
 
 ```ts
@@ -26,7 +26,7 @@ for (const element of sequence) {
 }
 ```
 
-If used wrong the array methods can do a lot of unnecessary work and allocations. Consider the following code to find the first element satisfying some condition:
+If used wrong, the array methods can do a lot of unnecessary work and allocations. Consider the following code to find the first element satisfying some condition:
 
 ```ts
 // bad
